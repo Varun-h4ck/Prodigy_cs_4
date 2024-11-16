@@ -1,0 +1,21 @@
+from pynput import keyboard
+
+def on_key_press(key):
+try:
+char = key.char
+if char:
+print(f"Typed character: '{char}'")
+except AttributeError:
+if key == keyboard.Key.space:
+print(f"Typed character: ' ' (space)")
+elif key == keyboard.Key.enter:
+print(f"Logged text: <Entered>")
+with open("keylog.txt", 'a') as log_file:
+log_file.write("<Entered>\n")
+elif key == keyboard.Key.esc:
+return False
+
+listener = keyboard.Listener(on_press=on_key_press)
+listener.start()
+
+input("Press Enter to stop...\n")
